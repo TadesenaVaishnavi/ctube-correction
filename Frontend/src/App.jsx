@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
 
         {/* Protected Routes */}
-        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/video" element={<ProtectedRoute><VideoPage /></ProtectedRoute>} />
         <Route path="/watch" element={<ProtectedRoute><WatchPage /></ProtectedRoute>} />
