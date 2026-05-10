@@ -1,43 +1,90 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Profile.css";
+
+const API = "https://ctube-correction-4.onrender.com";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("All fields are required");
+      return;
+    }
 
-    // Skip backend call
-    if (email && password) {
-      // Optional: store fake login state
-      localStorage.setItem("isLoggedIn", "true");
+    try {
+      const res = await fetch(`${API}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      navigate("/home");
-    } else {
-      alert("Please enter details");
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Invalid credentials");
+        return;
+      }
+
+      // ✅ store real token
+      localStorage.setItem("token", data.token);
+
+      alert("Login successful 🚀");
+
+      navigate("/"); 
+
+    } catch (err) {
+      console.error(err);
+      alert("Login failed");
     }
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="email"
-        placeholder="Enter email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <div className="profilePage">
+      <div className="container">
+        <div className="card">
 
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+          <h2>Welcome Back</h2>
+          <p>Login to continue</p>
 
-      <button type="submit">Login</button>
-    </form>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button onClick={handleLogin}>
+            Login
+          </button>
+
+          <p>
+            Don’t have an account?{" "}
+            <Link to="/signup">Sign Up</Link>
+          </p>
+
+          <p>
+            <Link to="/forgot">Forgot Password?</Link>
+          </p>
+
+        </div>
+      </div>
+    </div>
   );
 }
 
