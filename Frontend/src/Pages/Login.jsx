@@ -50,7 +50,7 @@ function Login() {
 
       alert(message);
       // navigate("/home");
-      navigate("/home", { replace: true });
+      navigate("/", { replace: true });
 
     } catch (err) {
       const msg =
