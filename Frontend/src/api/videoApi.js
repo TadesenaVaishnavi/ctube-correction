@@ -1,9 +1,28 @@
-import api from "./axios";
+import axios from "axios";
 
-export const getVideos = () => api.get("/api/ctube/videos");
+const VIDEO_API = axios.create({
+  baseURL: "https://ctube-correction-1.onrender.com",
+});
 
-export const uploadVideo = (data) =>
-  api.post("/api/ctube/videos", data);
+// 🔐 attach token automatically
+VIDEO_API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
 
-export const getVideoById = (id) =>
-  api.get(`/api/ctube/videos/${id}`);
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return req;
+});
+
+export const uploadVideo = (formData) => {
+  return VIDEO_API.post("/api/videos/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export const getAllVideos = () => {
+  return VIDEO_API.get("/api/videos");
+};
