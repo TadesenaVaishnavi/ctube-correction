@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { HashRouter as Router } from "react-router-dom";
+
 
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
@@ -23,7 +23,8 @@ export default function App() {
       <Routes>
 
         {/* Default route */}
-        <Route path="/"element={localStorage.getItem("token") ? (<Navigate to="/home" />) : (<Navigate to="/login" />)}/>
+        {/* <Route path="/"element={localStorage.getItem("token") ? (<Navigate to="/home" />) : (<Navigate to="/login" />)}/> */}
+        <Route path="/" element={<Navigate to="/login" />} />
 
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
 
         {/* Protected Routes */}
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/video" element={<ProtectedRoute><VideoPage /></ProtectedRoute>} />
         <Route path="/watch" element={<ProtectedRoute><WatchPage /></ProtectedRoute>} />
