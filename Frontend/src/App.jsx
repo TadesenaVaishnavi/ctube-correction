@@ -22,7 +22,6 @@ export default function App() {
       <Routes>
 
         {/* Default route */}
-        {/* <Route path="/" element={<Navigate to="/login" />} /> */}\
         <Route path="/"element={localStorage.getItem("token") ? (<Navigate to="/home" />) : (<Navigate to="/login" />)}/>
 
         {/* Public Routes */}
