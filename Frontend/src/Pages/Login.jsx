@@ -49,7 +49,8 @@ function Login() {
           : "Login successful 🚀";
 
       alert(message);
-      navigate("/home");
+      // navigate("/home");
+      navigate("/home", { replace: true });
 
     } catch (err) {
       const msg =
