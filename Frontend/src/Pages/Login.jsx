@@ -49,7 +49,7 @@ function Login() {
           : "Login successful 🚀";
 
       alert(message);
-      navigate("/");
+      navigate("/home");
 
     } catch (err) {
       const msg =
