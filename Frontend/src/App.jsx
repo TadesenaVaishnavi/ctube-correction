@@ -3,7 +3,7 @@
 
 // import Home from "./Pages/Home";
 // import Profile from "./Pages/Profile";
-// // import Login from "./Pages/Login";
+// import Login from "./Pages/Login";
 // import Signup from "./Pages/Signup";
 // import ForgotPassword from "./Pages/ForgotPassword";
 // import VideoPage from "./Pages/VideoPage";
@@ -20,13 +20,13 @@
 //     <Router>
 //       <Routes>
 //         {/* Default route */}
-//         {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+//         <Route path="/" element={<Navigate to="/login" />} />
 // {/* 
-//         <Route path="/home" element={<Home />} /> */}
+//         // <Route path="/home" element={<Home />} /> */}
 //         <Route path="/" element={<Navigate to="/home" />} />
 //         <Route path="/home" element={<Home />} />
 //         <Route path="/profile" element={<Profile />} />
-//         {/* <Route path="/login" element={<Login />} /> */}
+//         <Route path="/login" element={<Login />} />
 //         <Route path="/signup" element={<Signup />} />
 //         <Route path="/forgot" element={<ForgotPassword />} />
 //         <Route path="/video:id" element={<VideoPage />} />
@@ -52,7 +52,7 @@ import Signup from "./Pages/Signup";
 import ForgotPassword from "./Pages/ForgotPassword";
 import VideoPage from "./Pages/VideoPage";
 import WatchPage from "./Pages/WatchPage";
-import Channelpage from "./Pages/Channelpages";
+import Channelpage from "./Pages/Channelpage";
 
 import Subscriptions from "./Pages/Subscriptions";
 import History from "./Pages/History";
@@ -60,7 +60,7 @@ import WatchLater from "./Pages/WatchLater";
 import LikedVideos from "./Pages/LikedVideos";
 
 
-import PrivateRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // ✅ Check login (token exists or not)
 const isAuthenticated = () => {
@@ -144,3 +144,51 @@ export default function App() {
     </Router>
   );
 }
+
+
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
+// import Home from "./Pages/Home";
+// import Profile from "./Pages/Profile";
+// import Login from "./Pages/Login";
+// import Signup from "./Pages/Signup";
+// import ForgotPassword from "./Pages/ForgotPassword";
+// import VideoPage from "./Pages/VideoPage";
+// import WatchPage from "./Pages/WatchPage";
+// import Channelpage from "./Pages/Channelpage";
+// import Subscriptions from "./Pages/Subscriptions";
+// import History from "./Pages/History";
+// import WatchLater from "./Pages/WatchLater";
+// import LikedVideos from "./Pages/LikedVideos";
+
+// export default function App() {
+//   return (
+//     <Router>
+//       <Routes>
+
+//         {/* Default → go to Home directly */}
+//         <Route path="/" element={<Home />} />
+
+//         {/* Public Routes */}
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/signup" element={<Signup />} />
+//         <Route path="/forgot" element={<ForgotPassword />} />
+
+//         {/* All pages OPEN (no protection) */}
+//         <Route path="/home" element={<Home />} />
+//         <Route path="/profile" element={<Profile />} />
+//         <Route path="/video" element={<VideoPage />} />
+//         <Route path="/watch" element={<WatchPage />} />
+//         <Route path="/channel" element={<Channelpage />} />
+//         <Route path="/subscriptions" element={<Subscriptions />} />
+//         <Route path="/history" element={<History />} />
+//         <Route path="/watchlater" element={<WatchLater />} />
+//         <Route path="/liked" element={<LikedVideos />} />
+
+//         {/* Fallback */}
+//         <Route path="*" element={<Navigate to="/" />} />
+
+//       </Routes>
+//     </Router>
+//   );
+// }
