@@ -264,9 +264,9 @@
 
 
 import React, { useRef } from "react";
-import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Home.css";
+import { uploadVideo } from "../api/videoApi";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -287,23 +287,15 @@ export default function Home() {
     formData.append("title", file.name);
 
     try {
-      const res = await axios.post(
-        "https://your-backend-production.up.railway.app/api/ctube/videos",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("Upload success:", res.data);
-      alert("Video uploaded successfully!");
+       const res = await uploadVideo(formData);
+          console.log("Upload success:", res.data);
+          alert("Video uploaded successfully 🚀");
     } catch (error) {
       console.log("Upload failed:", error);
       alert("Upload failed");
     }
   };
+
 
   // ✅ Static video data (for now)
   const videos = [
