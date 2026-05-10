@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Profile.css";
 
-const API = "https://ctube-correction-4.onrender.com";
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  // ✅ use env variable (Vercel + production safe)
+  const API = import.meta.env.VITE_AUTH_API;
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -27,23 +28,26 @@ function Login() {
         }),
       });
 
+      // ✅ always parse JSON (NOT text)
       const data = await res.json();
 
+      // ❌ backend error handling
       if (!res.ok) {
         alert(data.message || "Invalid credentials");
         return;
       }
 
-      // ✅ store real token
+      // ✅ store real token from backend
       localStorage.setItem("token", data.token);
 
       alert("Login successful 🚀");
 
-      navigate("/"); 
+      // redirect
+      navigate("/");
 
     } catch (err) {
-      console.error(err);
-      alert("Login failed");
+      console.error("Login error:", err);
+      alert("Login failed. Check backend or network.");
     }
   };
 
@@ -52,34 +56,44 @@ function Login() {
       <div className="container">
         <div className="card">
 
+          <div className="profile-pic"></div>
+
           <h2>Welcome Back</h2>
-          <p>Login to continue</p>
+          <p className="joined">Login to continue</p>
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-          <button onClick={handleLogin}>
+          <button onClick={handleLogin} className="btn">
             Login
           </button>
 
-          <p>
+          <p className="joined" style={{ marginTop: "15px" }}>
             Don’t have an account?{" "}
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/signup" style={{ color: "#9e024b" }}>
+              Sign Up
+            </Link>
           </p>
 
-          <p>
-            <Link to="/forgot">Forgot Password?</Link>
+          <p className="joined">
+            <Link to="/forgot-password" style={{ color: "#9e024b" }}>
+              Forgot Password?
+            </Link>
           </p>
 
         </div>
