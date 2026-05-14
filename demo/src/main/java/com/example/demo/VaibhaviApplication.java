@@ -14,7 +14,7 @@ public class VaibhaviApplication {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder getpasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

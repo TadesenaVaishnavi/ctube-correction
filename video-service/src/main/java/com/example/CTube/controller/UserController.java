@@ -27,6 +27,7 @@ public class UserController {
             return ResponseEntity.ok("User registered successfully ✅");
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().body("Registration failed ❌");
         }
     }

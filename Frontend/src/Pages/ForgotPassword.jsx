@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { loginUser, registerUser } from "../api/authApi";
+// import { loginUser, registerUser } from "../api/authApi";
+import { forgotPassword } from "../api/authApi";
 import "../styles/Profile.css";
 
 function ForgotPassword() {
@@ -52,6 +53,7 @@ function ForgotPassword() {
             Enter your email and we’ll send a reset link
           </p>
 
+          <div className="input-group">
           <input
             type="email"
             placeholder="Enter your email"
@@ -61,6 +63,7 @@ function ForgotPassword() {
               setMessage("");
             }}
           />
+          </div>
 
           <button
             onClick={handleReset}

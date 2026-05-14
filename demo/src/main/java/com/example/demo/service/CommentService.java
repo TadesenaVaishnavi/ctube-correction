@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CommentService {
@@ -21,12 +22,12 @@ public class CommentService {
     }
 
     
-    public Comment addComment(Comment comment) {
+    public Comment addComment(Comment comment, String email) {
 
-        Long userId = comment.getUser().getId();
+        // Long userId = comment.getUser().getId();
 
         // fetch user from DB
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // attach user to comment

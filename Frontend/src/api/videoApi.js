@@ -16,7 +16,7 @@ VIDEO_API.interceptors.request.use((req) => {
 });
 
 export const uploadVideo = (formData) =>
-  VIDEO_API.post("/api/videos/upload", formData, {
+  VIDEO_API.post("/api/ctube/upload", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 

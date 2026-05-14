@@ -1,10 +1,18 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.entity.Comment;
 import com.example.demo.service.CommentService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -18,8 +26,12 @@ public class CommentController {
 
     @PostMapping
     public Comment addComment(@RequestBody Comment comment) {
-        System.out.println("Received comment: " + comment);  // Debugging
-        return commentService.addComment(comment);
+        String email = SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getName();
+            
+        return commentService.addComment(comment, email);
     }
 
     @GetMapping

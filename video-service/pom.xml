@@ -9,7 +9,7 @@
 		<version>3.2.5</version>
 		<relativePath />
 	</parent>
-	<groupId>com.example.CTube</groupId>
+	<groupId>com.example.ctube</groupId>
 	<artifactId>CTubeProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CTubeProject</name>
@@ -67,6 +67,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+        </dependency>
+
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
 	</dependencies>
 

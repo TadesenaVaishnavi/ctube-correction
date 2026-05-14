@@ -1,269 +1,4 @@
-// import React, { useRef, useEffect, useState } from "react";
-// import axios from "axios";
-// import { Link, useNavigate, useLocation } from "react-router-dom";
-
-// import "../styles/Home.css";
-
-// // ✅ CONFIG
-// const API = "http://localhost:9090";
-
-// export default function Home() {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const fileInputRef = useRef();
-
-//   // =====================================
-//   // STATIC VIDEOS
-//   // =====================================
-//   const staticVideos = [
-//     {
-//       id: "1",
-//       thumbnail:
-//         "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-//       title: "Never Gonna Give You Up",
-//       channelName: "Rick Astley",
-//       videoUrl:
-//         "https://www.youtube.com/embed/dQw4w9WgXcQ",
-//       duration: 212,
-//       views: 7000,
-//     },
-//   ];
-
-//   // =====================================
-//   // STATE
-//   // =====================================
-//   const [videos, setVideos] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   // =====================================
-//   // FETCH VIDEOS
-//   // =====================================
-//   useEffect(() => {
-//     fetchVideos();
-//   }, []);
-
-//   const fetchVideos = async () => {
-//     try {
-//       const res = await axios.get(`${API}/api/ctube/videos`);
-
-//       // ✅ merge once (no duplication)
-//       setVideos([...staticVideos, ...res.data]);
-//     } catch (error) {
-//       console.log("Fetch error:", error);
-//       setVideos(staticVideos);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   // =====================================
-//   // VIDEO UPLOAD
-//   // =====================================
-//   const handleVideoUpload = async (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     try {
-//       const formData = new FormData();
-//       formData.append("file", file);
-//       formData.append("upload_preset", "ctube_upload");
-
-//       // 🔥 CLOUDINARY
-//       const cloudinaryRes = await axios.post(
-//         "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/video/upload",
-//         formData
-//       );
-
-//       const videoData = {
-//         title: file.name,
-//         videoUrl: cloudinaryRes.data.secure_url,
-
-//         // ✅ FIX thumbnail
-//         thumbnail: cloudinaryRes.data.secure_url.replace(
-//           ".mp4",
-//           ".jpg"
-//         ),
-
-//         duration: cloudinaryRes.data.duration,
-//         publicId: cloudinaryRes.data.public_id,
-//         channelName: "My Channel",
-//         views: 0,
-//         likes: 0,
-//       };
-
-//       // 🔥 SAVE TO BACKEND
-//       await axios.post(
-//         `${API}/api/ctube/videos`,
-//         videoData
-//       );
-
-//       await fetchVideos();
-
-//       alert("Video uploaded successfully!");
-
-//       // ✅ reset input (important)
-//       fileInputRef.current.value = "";
-
-//     } catch (error) {
-//       console.log("Upload error:", error);
-//       alert("Upload failed");
-//     }
-//   };
-
-//   // =====================================
-//   // FORMAT TIME
-//   // =====================================
-//   const formatDuration = (seconds) => {
-//     if (!seconds) return "0:00";
-
-//     const mins = Math.floor(seconds / 60);
-//     const secs = Math.floor(seconds % 60);
-
-//     return `${mins}:${secs < 10 ? "0" + secs : secs}`;
-//   };
-
-//   // =====================================
-//   // LOADING
-//   // =====================================
-//   if (loading) {
-//     return <div className="home">Loading...</div>;
-//   }
-
-//   return (
-//     <div className="home">
-
-//       {/* NAVBAR */}
-//       <div className="navbar">
-
-//         <div className="navLeft">
-//           <img src="/icons/hamburger.png" alt="menu" />
-
-//           <Link to="/">
-//             <img
-//               src="/logo/Circle.png"
-//               alt="logo"
-//               className="logo"
-//             />
-//           </Link>
-//         </div>
-
-//         {/* SEARCH */}
-//         <div className="searchBar">
-//           <input placeholder="Search..." />
-
-//           <div className="searchIcons">
-//             <img src="/icons/search.png" alt="" />
-//             <img src="/icons/microphone-black-shape.png" alt="" />
-//           </div>
-//         </div>
-
-//         {/* RIGHT NAV */}
-//         <div className="navRight">
-
-//           <div className="watchicons">
-
-//             {/* FILE INPUT */}
-//             <input
-//               type="file"
-//               accept="video/*"
-//               ref={fileInputRef}
-//               hidden
-//               onChange={handleVideoUpload}
-//             />
-
-//             {/* UPLOAD */}
-//             <img
-//               src="/icons/video-camera.png"
-//               alt="upload"
-//               onClick={() => fileInputRef.current.click()}
-//               style={{ cursor: "pointer" }}
-//             />
-
-//             <img src="/icons/bell.png" alt="" />
-
-//             <img
-//               src="/icons/join.png"
-//               alt=""
-//               onClick={() => navigate("/watch")}
-//               style={{ cursor: "pointer" }}
-//             />
-//           </div>
-
-//           <Link to="/profile">
-//             <div className="profile"></div>
-//           </Link>
-
-//         </div>
-//       </div>
-
-//       <div className="main">
-
-//         {/* SIDEBAR */}
-//         <div className="sidebar">
-//           <div className="menu">
-
-//             {[
-//               { path: "/", label: "Home", icon: "home.png" },
-//               { path: "/subscriptions", label: "Subscriptions", icon: "subscriptions.png" },
-//               { path: "/history", label: "History", icon: "history.png" },
-//               { path: "/watchlater", label: "Watch later", icon: "clock.png" },
-//               { path: "/liked", label: "Liked videos", icon: "like.png" },
-//               { path: "/channelpage", label: "Channel", icon: "user.png" },
-//             ].map((item) => (
-//               <div
-//                 key={item.path}
-//                 className={`menu-item ${
-//                   location.pathname === item.path ? "active" : ""
-//                 }`}
-//                 onClick={() => navigate(item.path)}
-//               >
-//                 <img src={`/icons/${item.icon}`} alt="" />
-//                 <span>{item.label}</span>
-//               </div>
-//             ))}
-
-//           </div>
-//         </div>
-
-//         {/* CONTENT */}
-//         <div className="content">
-
-//           {videos.map((video) => (
-//             <div
-//               key={video.id}
-//               className="card"
-//               onClick={() =>
-//                 navigate(`/video/${video.id}`) // ✅ FIX (no state)
-//               }
-//             >
-
-//               <div className="thumbnail">
-//                 <img src={video.thumbnail} alt="" />
-//                 <span>{formatDuration(video.duration)}</span>
-//               </div>
-
-//               <div className="videoInfo">
-//                 <div className="avatar"></div>
-
-//                 <div>
-//                   <h4>{video.title}</h4>
-//                   <p>{video.channelName}</p>
-//                   <span>{video.views} views</span>
-//                 </div>
-//               </div>
-
-//             </div>
-//           ))}
-
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
-
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Home.css";
 import { uploadVideo } from "../api/videoApi";
@@ -272,6 +7,13 @@ export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
   const fileInputRef = useRef();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // const [tempQuery, setTempQuery] = useState("");  // search happens only when clicking
+
+  const handleSearch = () => {
+    setSearchQuery(tempQuery);
+  };
 
   // ✅ CONNECTED TO BACKEND
   const handleVideoUpload = async (e) => {
@@ -336,13 +78,22 @@ export default function Home() {
       channel: "My Channel",
     },
   ];
+  const filteredVideos = videos.filter((video) =>
+    video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    video.channel.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="home">
       {/* NAVBAR */}
       <div className="navbar">
         <div className="navLeft">
-          <img src="/icons/hamburger.png" alt="menu" />
+          <img 
+            src="/icons/hamburger.png" 
+            alt="menu"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+            style={{ cursor: "pointer" }}
+          />
 
           <Link to="/">
             <img src="/logo/Circle.png" alt="logo" className="logo" />
@@ -350,7 +101,26 @@ export default function Home() {
         </div>
 
         <div className="searchBar">
-          <input type="text" placeholder="Type something ..." />
+          <input 
+            type="text" 
+            placeholder="Type something ..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+           {/* search happens only when clicking */}
+          {/* <input
+            type="text"
+            placeholder="Type something ..."
+            value={tempQuery}
+            onChange={(e) => setTempQuery(e.target.value)}
+          />
+ 
+          <img
+            src="/icons/search.png"
+            alt="search"
+            onClick={handleSearch}
+            style={{ cursor: "pointer" }}
+          /> */}
           <div className="searchIcons">
             <img src="/icons/search.png" alt="search" />
             <img src="/icons/microphone-black-shape.png" alt="mic" />
@@ -395,11 +165,12 @@ export default function Home() {
 
       <div className="main">
         {/* SIDEBAR */}
-        <div className="sidebar">
+        <div className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
+        {/* <div className="sidebar"> */}
           <div className="menu">
             <div
               className={`menu-item ${location.pathname === "/" ? "active" : ""}`}
-              onClick={() => navigate("/")}>
+              onClick={() => navigate("/home")}>
               <img src="/icons/home.png" alt="" />
               <span>Home</span>
             </div>
@@ -444,7 +215,7 @@ export default function Home() {
               className={`menu-item ${
                 location.pathname === "/channelpage" ? "active" : ""
               }`}
-              onClick={() => navigate("/channelpage")}>
+              onClick={() => navigate("/channel")}>
               <img src="/icons/user.png" alt="" />
               <span>Channel</span>
             </div>
@@ -453,7 +224,7 @@ export default function Home() {
 
         {/* CONTENT */}
         <div className="content">
-          {videos.map((video) => (
+          {filteredVideos.map((video) => (
             <div
               key={video.id}
               className="card"

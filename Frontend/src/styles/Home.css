@@ -135,6 +135,21 @@ body {
   padding: 15px;
 }
 
+.sidebar.closed {
+  transform: translateX(-100%);
+  position: absolute;
+  background: white;
+  z-index: 1000;
+}
+
+.sidebar.closed .menu-item span {
+  display: none;
+}
+
+.sidebar.closed .menu-item {
+  justify-content: center;
+}
+
 .menu-item {
   display: flex;
   align-items: center;
