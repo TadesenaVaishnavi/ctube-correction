@@ -31,7 +31,9 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // attach user to comment
-        comment.setUser(user);
+        // comment.setUser(user);
+        comment.setUserId(user.getId());
+        comment.setUsername(user.getUsername());
 
         return commentRepository.save(comment);
     }

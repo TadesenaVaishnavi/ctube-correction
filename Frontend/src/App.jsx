@@ -114,6 +114,7 @@ export default function App() {
         {/* Protected Routes */}
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        {/* <Route path="/profi" element={<ProtectedRoute><Profi /></ProtectedRoute>} /> */}
         <Route path="/video/:id" element={<ProtectedRoute><VideoPage /></ProtectedRoute>} />
         <Route path="/watch" element={<ProtectedRoute><WatchPage /></ProtectedRoute>} />
         <Route path="/channel" element={<ProtectedRoute><Channelpage /></ProtectedRoute>} />

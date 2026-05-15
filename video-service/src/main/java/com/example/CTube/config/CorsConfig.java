@@ -16,7 +16,10 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
 
                 registry.addMapping("/api/**")  // ✅ applies to ALL APIs
-                        .allowedOrigins("https://ctube-real-tylu.vercel.app/") // 🔁 change this
+                        .allowedOrigins(
+                            "http://localhost:3000",
+                            "https://ctube-correction.vercel.app"
+                        ) // 🔁 change this
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

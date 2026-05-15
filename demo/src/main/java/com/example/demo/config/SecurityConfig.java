@@ -51,7 +51,7 @@ public class SecurityConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("https://ctube-real-tylu.vercel.app")); // 🔁 change this
+        config.setAllowedOrigins(List.of("https://ctube-correction.vercel.app")); // 🔁 change this
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
